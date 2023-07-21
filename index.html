@@ -1,25 +1,41 @@
 <!doctype html>
-
+<html>
 <head>
-	<meta charset="utf-8">
-	<script>
-		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
-	</script>
+  <meta charset="utf-8">
 </head>
-
 <body>
-
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
-	<label><input type="text" name="q" placeholder="Enter your search query" required></label>
+  <form id="searchForm">
+    <label><input type="text" name="q" placeholder="Enter your search query" required></label>
     <label><input type="radio" name="engine" value="google"> Google</label>
     <label><input type="radio" name="engine" value="duckDuckGo"> DuckDuckGo</label>
     <label><input type="radio" name="engine" value="bing"> Bing</label>
     <label><input type="radio" name="engine" value="ask"> Ask</label>
     <button type="submit">Go!</button>
-	</form>
-
+  </form>
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      let form = event.target;
+      let engineRadios = form.elements['engine'];
+      let selectedEngine = '';
+      for (let i = 0; i < engineRadios.length; i++) {
+        if (engineRadios[i].checked) {
+          selectedEngine = engineRadios[i].value;
+        }
+      }
+      let actionUrl;
+      if (selectedEngine === 'duckDuckGo') {
+        actionUrl = 'https://duckduckgo.com/';
+      } else if (selectedEngine === 'bing') {
+        actionUrl = 'https://www.bing.com/search';
+      } else if (selectedEngine === 'ask') {
+        actionUrl = 'https://www.ask.com/web';
+      } else {
+        actionUrl = 'https://www.google.com/search';
+      }
+      form.action = actionUrl;
+      form.submit();
+    });
+  </script>
 </body>
+</html>
